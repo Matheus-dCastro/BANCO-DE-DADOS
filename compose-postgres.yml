@@ -1,0 +1,31 @@
+services:
+
+  pgres:
+    image: postgres:17 #Versão do postgres atualizada
+    restart: always #Sempre reinicia quando finalizado
+    shm_size: 128mb #Memória compartilhada, por padrão o docker aloca 64mb mas o postgres necessita de 128mb
+    ports:
+      - "5432:5432" #Apontamento da porta, a porta 5432 do host é redirecionada para a porta 5432 do container
+    environment:
+      POSTGRES_USER: user_test # Usuário do banco de dados
+      POSTGRES_PASSWORD: imdteste123 # Senha do banco de dados
+      POSTGRES_DB: imd0401 # Nome do banco de dados
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Volume dos arquivos do postgres, ao criar um volume é possível reutilizar ao subir novamente um container
+    networks:
+      - imd0401-net # Rede do compose
+
+  adminer:
+    image: adminer # Ferramenta para acessar através da web o banco de dados
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - imd0401-net
+
+volumes:
+  postgres-data: # Volume dos dados do postgres
+
+networks:
+  imd0401-net:
+    driver: bridge # Rede definida em bridge para os dois containers poderem se comunicar
