@@ -1,0 +1,371 @@
+{
+  "version": "3.0.0",
+  "darkMode": true,
+  "gridEnabling": true,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "All",
+    "tablePositions": [
+      {
+        "name": "nutricionistas",
+        "schemaName": "public",
+        "x": 624,
+        "y": -600
+      },
+      {
+        "name": "pacientes",
+        "schemaName": "public",
+        "x": 606.2877007232132,
+        "y": 192
+      },
+      {
+        "name": "agendamentos",
+        "schemaName": "public",
+        "x": 1360,
+        "y": -216
+      },
+      {
+        "name": "anamneses",
+        "schemaName": "public",
+        "x": 224,
+        "y": 160
+      },
+      {
+        "name": "consultas_avaliacoes",
+        "schemaName": "public",
+        "x": 608,
+        "y": -248
+      },
+      {
+        "name": "exames_laboratoriais",
+        "schemaName": "public",
+        "x": 1040,
+        "y": 520
+      },
+      {
+        "name": "alimentos",
+        "schemaName": "public",
+        "x": 1712,
+        "y": -176
+      },
+      {
+        "name": "planos_alimentares",
+        "schemaName": "public",
+        "x": 1376,
+        "y": 280
+      },
+      {
+        "name": "refeicoes",
+        "schemaName": "public",
+        "x": 1711.6837038468807,
+        "y": 248
+      },
+      {
+        "name": "itens_refeicao",
+        "schemaName": "public",
+        "x": 2360,
+        "y": 8
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "paciente_id"
+        ],
+        "firstTableName": "agendamentos",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "pacientes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 1053.211581962741,
+            "y": -104
+          },
+          {
+            "x": 1053.211581962741,
+            "y": 240
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "nutricionista_id"
+        ],
+        "firstTableName": "agendamentos",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "nutricionistas",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 1261.104399903878,
+            "y": -136
+          },
+          {
+            "x": 1261.104399903878,
+            "y": -220.55843940078853
+          },
+          {
+            "x": 1061.5272946803864,
+            "y": -220.55843940078853
+          },
+          {
+            "x": 1061.5272946803864,
+            "y": -503.29267180073475
+          },
+          {
+            "x": 978.6781981214432,
+            "y": -503.29267180073475
+          },
+          {
+            "x": 978.6781981214432,
+            "y": -552
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "paciente_id"
+        ],
+        "firstTableName": "anamneses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "pacientes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "paciente_id"
+        ],
+        "firstTableName": "consultas_avaliacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "pacientes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 999.8162641793579,
+            "y": -136
+          },
+          {
+            "x": 999.8162641793579,
+            "y": 240
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "nutricionista_id"
+        ],
+        "firstTableName": "consultas_avaliacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "nutricionistas",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "agendamento_id"
+        ],
+        "firstTableName": "consultas_avaliacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "agendamentos",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "paciente_id"
+        ],
+        "firstTableName": "exames_laboratoriais",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "pacientes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 944.9433955935933,
+            "y": 632
+          },
+          {
+            "x": 944.9433955935933,
+            "y": 240
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "consulta_id"
+        ],
+        "firstTableName": "exames_laboratoriais",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "consultas_avaliacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "paciente_id"
+        ],
+        "firstTableName": "planos_alimentares",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "pacientes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 891.6334038482132,
+            "y": 360
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "nutricionista_id"
+        ],
+        "firstTableName": "planos_alimentares",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "nutricionistas",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 1192.4756802947595,
+            "y": 392
+          },
+          {
+            "x": 1192.4756802947595,
+            "y": -552
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "consulta_id"
+        ],
+        "firstTableName": "planos_alimentares",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "consultas_avaliacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 1103.105858268614,
+            "y": 424
+          },
+          {
+            "x": 1103.105858268614,
+            "y": -200
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "plano_alimentar_id"
+        ],
+        "firstTableName": "refeicoes",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "planos_alimentares",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "refeicao_id"
+        ],
+        "firstTableName": "itens_refeicao",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "refeicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": [
+          {
+            "x": 2278.172578527337,
+            "y": 120
+          },
+          {
+            "x": 2278.172578527337,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "firstFieldNames": [
+          "alimento_id"
+        ],
+        "firstTableName": "itens_refeicao",
+        "firstSchemaName": "public",
+        "firstRelation": "*",
+        "secondFieldNames": [
+          "id"
+        ],
+        "secondTableName": "alimentos",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

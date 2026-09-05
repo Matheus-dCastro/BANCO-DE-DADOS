@@ -1,0 +1,185 @@
+// ENUMS
+Enum status_agendamento {
+  agendado
+  confirmado
+  realizado
+  cancelado
+  nao_compareceu
+}
+
+Enum tipo_agendamento {
+  primeira_consulta
+  retorno
+}
+
+Enum tipo_moradia {
+  propria
+  alugada
+  cedida
+  outro
+}
+
+// MÓDULO: USUÁRIOS E ACESSOS
+Table nutricionistas {
+  id int [pk, increment] // Chave primaria
+  crn varchar(20) [unique, not null] // deve ser consultado se esta ativo para poder prestar serviço
+  cpf varchar(14) [unique, not null]
+  nome varchar(120) [not null]
+  email varchar(150) [unique, not null] // pra fazer o login no sistema
+  senha_hash varchar(255) [not null]
+  telefone varchar(20)
+  criado_em timestamp [default: `now()`]
+}
+
+Table pacientes {
+  id int [pk, increment] // para passar nas Request para n espor os dados do cliente nas requisições
+  cpf varchar(14) [unique, not null] // deve ser tratado com cuidado para n ter vazamentos de dados
+  nome varchar(120) [not null]
+  data_nascimento date [not null] // idade calculado na regra de negocios depois receber a info da data de nacimento
+  email varchar(150) [unique, not null] // para fazer o login no sistema e receber as horientações nutricionais
+  senha_hash varchar(255) [not null]
+  telefone varchar(20)
+  profissao varchar(100)
+  renda_mensal decimal(10,2)
+  tipo_moradia tipo_moradia
+  qtd_pessoas_moradia int [default: 1]
+  criado_em timestamp [default: `now()`]
+}
+
+Table agendamentos {
+  id int [pk, increment] 
+  nutricionista_id int [not null] // para qual proficional ele ira se direcionar, chave estrangeira
+  paciente_id int [not null] // oq linka um paciente a uma consulta, chave estrangeira
+  data_hora timestamp [not null] 
+  tipo tipo_agendamento [default: 'primeira_consulta']
+  status status_agendamento [default: 'agendado']
+  observacoes text
+  criado_em timestamp [default: `now()`]
+}
+
+// MÓDULO: CLÍNICO, ANAMNESE E EXAMES
+Table anamneses {
+  id int [pk, increment]
+  paciente_id int [unique, not null] // oq linka o historico clinico do pasciente, chave estrangeira
+  historico_alimentar text
+  historico_familiar text
+  doencas_cronicas text
+  alergias text
+  intolerancias text
+  medicacoes_em_uso text
+  atualizado_em timestamp [default: `now()`]
+}
+
+Table consultas_avaliacoes {
+  id int [pk, increment]
+  agendamento_id int [unique]
+  paciente_id int [not null] // chave estrangeira
+  nutricionista_id int [not null] // chave estrangeira
+  data_avaliacao timestamp [default: `now()`]
+  peso decimal(5,2) [not null, note: 'em kg']
+  altura decimal(3,2) [not null, note: 'em metros']
+  circunferencia_cintura decimal(5,2) [note: 'em cm']
+  circunferencia_quadril decimal(5,2) [note: 'em cm']
+  percentual_gordura decimal(4,2)
+  percentual_massa_magra decimal(4,2)
+  notas_evolucao text [note: 'notas da nutricionista sobre o paciente']
+}
+
+Table exames_laboratoriais { // chave estrangeira
+  id int [pk, increment]
+  consulta_id int
+  paciente_id int [not null] // chave estrangeira
+  nome_exame varchar(100) [not null]
+  data_realizacao date [not null]
+  resultados text
+  arquivo_url varchar(255) [note: 'link para PDF/imagem do exame anexado']
+  criado_em timestamp [default: `now()`]
+}
+
+// MÓDULO: ALIMENTOS E PRESCRIÇÃO NUTRICIONAL
+Table alimentos {
+  id int [pk, increment]
+  nome varchar(150) [not null]
+  porcao_base decimal(6,2) [default: 100.00, note: 'em gramas ou ml']
+  calorias_kcal decimal(6,2) [not null]
+  carboidratos_g decimal(6,2) [not null]
+  proteinas_g decimal(6,2) [not null]
+  gorduras_totais_g decimal(6,2) [not null]
+  fibras_g decimal(6,2) [default: 0]
+  sodio_mg decimal(6,2) [default: 0]
+  micronutrientes_info json [note: 'vitaminas, minerais e detalhes extras']
+  ativo boolean [default: true]
+}
+
+Table planos_alimentares {
+  id int [pk, increment]
+  paciente_id int [not null] // chave estrangeira
+  nutricionista_id int [not null] // chave estrangeira
+  consulta_id int
+  titulo varchar(100) [not null, note: 'Ex: Dieta Hipertrofia Fase 1']
+  data_inicio date [not null]
+  data_validade date
+  orientacoes_gerais text
+  ativo boolean [default: true]
+  criado_em timestamp [default: `now()`]
+}
+
+Table refeicoes {
+  id int [pk, increment]
+  plano_alimentar_id int [not null]
+  nome varchar(80) [not null, note: 'Ex: Café da Manhã, Almoço, Ceia']
+  horario_sugerido time
+  ordem int [default: 1]
+}
+
+Table itens_refeicao {
+  id int [pk, increment]
+  alimento_id int [not null]
+  refeicao_id int [not null]
+  quantidade decimal(6,2) [not null, note: 'baseado na porção em g/ml']
+  medida_caseira varchar(100) [note: 'Ex: 2 colheres de sopa cheias']
+  observacao text
+}
+
+// RELACIONAMENTOS (REFS)
+
+// Agendamento
+Ref: agendamentos.paciente_id > pacientes.id 
+Ref: agendamentos.nutricionista_id > nutricionistas.id
+
+// Anamnese e Avaliações
+Ref: anamneses.paciente_id - pacientes.id
+Ref: consultas_avaliacoes.paciente_id > pacientes.id
+Ref: consultas_avaliacoes.nutricionista_id > nutricionistas.id
+Ref: consultas_avaliacoes.agendamento_id - agendamentos.id
+Ref: exames_laboratoriais.paciente_id > pacientes.id
+Ref: exames_laboratoriais.consulta_id > consultas_avaliacoes.id
+
+// Prescrição / Dieta
+Ref: planos_alimentares.paciente_id > pacientes.id
+Ref: planos_alimentares.nutricionista_id > nutricionistas.id
+Ref: planos_alimentares.consulta_id > consultas_avaliacoes.id
+Ref: refeicoes.plano_alimentar_id > planos_alimentares.id [delete: cascade]
+Ref: itens_refeicao.refeicao_id > refeicoes.id [delete: cascade]
+Ref: itens_refeicao.alimento_id > alimentos.id
+
+// AGRUPAMENTO VISUAL NO DIAGRAMA
+
+TableGroup Acessos_e_Atendimento {
+  nutricionistas
+  pacientes
+  agendamentos
+}
+
+TableGroup Clinico_e_Prontuario {
+  anamneses
+  consultas_avaliacoes
+  exames_laboratoriais
+}
+
+TableGroup Nutricao_e_Dietas {
+  alimentos
+  planos_alimentares
+  refeicoes
+  itens_refeicao
+} 
