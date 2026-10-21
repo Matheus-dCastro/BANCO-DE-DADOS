@@ -1,20 +1,6 @@
--- ==============================================================================
--- UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE (UFRN)
--- Instituto Metrópole Digital (IMD) - Bacharelado em Tecnologia da Informação
--- IMD0401 - Banco de Dados - Turma 01 - 2026.2
--- Docente: Prof. Alexandre Varella
--- Aulas 8 e 9: Potiguar+: DDL, DML e consultas
--- 
--- Arquivo: MATRICULA_NOME.sql
--- Aluno: Substitua pelo seu Nome e Matrícula
--- Execução: psql -v ON_ERROR_STOP=1
--- ==============================================================================
-
--- ==============================================================================
--- S Conhecendo a base (2,0 pts)
+-- S Conhecendo a base 
 -- Resolva cada item com uma consulta a uma única tabela.
 -- Anote em comentário quantas linhas cada consulta devolveu.
--- ==============================================================================
 
 -- S (a)
 -- Os 5 produtos ativos mais caros, com nome e preço.
@@ -42,8 +28,8 @@ FROM cliente
 WHERE (cidade = 'Mossoró' OR cidade = 'Caicó')
   AND (data_cadastro >= '2025-01-01' AND data_cadastro < '2026-01-01');
 -- Quantidade de linhas retornadas: devolve apenas os clientes dessas duas cidades que se cadastraram em 2025.
---
--- [RESPOSTA SOBRE OS PARÊNTESES]:
+
+
 -- Sem os parênteses, a cláusula ficaria:
 --   WHERE cidade = 'Mossoró' OR cidade = 'Caicó' AND data_cadastro >= '2025-01-01' AND data_cadastro < '2026-01-01'
 -- Na precedência de operadores da álgebra booleana e do SQL, o operador AND tem precedência sobre o OR.
@@ -74,9 +60,7 @@ WHERE nome ILIKE '%notebook%';
 -- Quantidade de linhas retornadas: retorna a quantidade de produtos ativos ou inativos que contenham 'notebook' no nome.
 
 
--- ==============================================================================
--- P1 A tabela do programa (2,0 pts)
--- ==============================================================================
+-- P1 A tabela do programa 
 
 -- Criação da tabela fidelidade com restrições e valores padrão
 CREATE TABLE fidelidade (
@@ -93,9 +77,7 @@ ADD COLUMN indicado_por INT,
 ADD CONSTRAINT fk_fidelidade_indicado_por FOREIGN KEY (indicado_por) REFERENCES cliente(id_cliente) ON DELETE SET NULL;
 
 
--- ==============================================================================
--- P2 Os primeiros participantes (2,0 pts)
--- ==============================================================================
+-- P2 Os primeiros participantes
 
 -- P2 (a)
 -- Os fundadores: todos os clientes de Natal cadastrados em 2025, com adesão em 01/10/2026,
@@ -136,9 +118,7 @@ RETURNING *;
 -- Restrição que recusou: CHECK (pontos >= 0)
 
 
--- ==============================================================================
--- P3 Pontos da campanha de outubro (2,0 pts)
--- ==============================================================================
+-- P3 Pontos da campanha de outubro 
 
 -- P3 (a)
 -- Lance os pontos num único comando: quem já participa soma os pontos novos aos que tinha;
@@ -171,9 +151,7 @@ END
 RETURNING *;
 
 
--- ==============================================================================
--- P4 O relatório e a saída (2,0 pts)
--- ==============================================================================
+-- P4 O relatório e a saída 
 
 -- P4 (a)
 -- O relatório: cliente, nível, pontos, adesão no formato DD/MM/AAAA e quantos pontos faltam
@@ -225,10 +203,11 @@ SELECT * FROM fidelidade;
 
 ROLLBACK;
 
--- [RESPOSTA SOBRE O CLIENTE 1]:
 -- Por que apagar a cliente 1 não daria certo?
--- Resposta: A cliente 1 possui registros associados em outras tabelas da base de dados, como por exemplo na tabela "pedido".
+-- A cliente 1 possui registros associados em outras tabelas da base de dados, como por exemplo na tabela pedido.
+
 -- Por padrão na integridade relacional do PostgreSQL (comportamento ON DELETE RESTRICT ou NO ACTION),
--- não é permitido apagar um registro pai na tabela "cliente" enquanto existirem registros filhos dependentes na tabela "pedido"
--- apontando para esse "id_cliente". A tentativa resultaria no erro:
--- "ERROR: update or delete on table "cliente" violates foreign key constraint "pedido_id_cliente_fkey" on table "pedido"".
+-- não é permitido apagar um registro pai na tabela cliente enquanto existirem registros filhos dependentes na tabela pedido
+
+-- apontando para esse id_cliente. A tentativa resultaria no erro:
+-- "ERROR: update or delete on table "cliente" violates foreign key constraint "pedido_id_cliente_fkey" on table pedido.
